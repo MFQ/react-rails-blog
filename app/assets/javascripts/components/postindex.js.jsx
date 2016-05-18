@@ -3,8 +3,19 @@ var Postindex = React.createClass({
     posts: React.PropTypes.array
   },
 
+  getInitialState: function() {
+    return {posts: this.props.posts};
+  },
+
+
+  handleSavePost: function(post){
+    var newPosts = this.state.posts
+    newPosts.push(post)
+    this.setState({posts: newPosts});
+  },
+
   render: function() {
-    var postsDivs = this.props.posts.map(function(p){
+    var postsDivs = this.state.posts.map(function(p){
       return (
         <Post post={p}/>
       )
@@ -12,7 +23,11 @@ var Postindex = React.createClass({
 
     return (
       <div>
-        Post index
+        <div>
+          <PostForm onSavePost={this.handleSavePost}/>
+        </div>
+
+        <h1> Posts </h1>
         <div>{postsDivs}</div>
       </div>
     );
